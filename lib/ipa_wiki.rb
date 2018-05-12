@@ -54,14 +54,11 @@ module IPAwiki
       @url = url
     end
 
-    def write_tables(table_name='ipa_table')
+    def extract_tables(table_name='ipa_table')
       mechanize = Mechanize.new
       page = mechanize.get(url)
       tables = page.search('table.wikitable')
-      tables.each_with_index do |table, index|
-        t = IPAwiki::Table.new(table)
-        t.to_tsv("#{table_name}_#{index}.tsv")
-      end
+      tables.map{ |table| IPAwiki::Table.new(table) }
     end
   end
 end
