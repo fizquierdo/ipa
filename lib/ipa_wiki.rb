@@ -42,7 +42,7 @@ module IPAwiki
       html_table.search('tr').each do |tr|
         cells = tr.search('td')
         next if cells.empty?
-        rows << cells.map(&:text).map(&:remove_numbers)
+        rows << cells.map(&:text).map(&:remove_wiki_annotation)
       end
       rows
     end
@@ -64,7 +64,7 @@ module IPAwiki
 end
 
 class String
-  def remove_numbers
-    self.tr("0-9","")
+  def remove_wiki_annotation
+    self.tr("0-9","").tr('—','')
   end
 end
